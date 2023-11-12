@@ -1,0 +1,52 @@
+<%- layout('layouts/template') %>
+
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Pozos</h1>
+    <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.
+        For more information about DataTables, please visit the <a target="_blank"
+            href="https://datatables.net">official DataTables documentation</a>.</p>
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-body">
+            <div class="table-responsive">
+                <form action="/pozos/<%=datos[0].id_pozo%>?_method=PUT" method="POST">
+                    <div class="mb-3">
+                        <label class="form-label" for="id_pozo">ID Pozo</label>
+                        <input class="form-control" type="text" id="title" name="id_pozo" value="<%=datos[0].id_pozo%>" disabled>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="estado">Estado</label>
+                        <select class="form-select" aria-label="Default select example" name="estado">
+                            <% for(let i=1; i<=32; i++){ %>
+                                <% if(i !== datos[0].id_estado){ %>
+                                    <option value="<%= i %>"><%= i %></option>
+                                <% } else { %>
+                                    <option selected value="<%= i %>"><%= i %></option>
+                                <% } %>
+                            <% } %>
+                          </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="periodo">Periodo</label>
+                        <input class="form-control" type="date" id="location" name="periodo"
+                            value="<%=datos[0].periodo %>" required>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <button class="btn btn-info">Actualizar Pozo</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- /.container-fluid -->
+
+</div>
+<!-- End of Main Content -->

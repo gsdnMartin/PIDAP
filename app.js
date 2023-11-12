@@ -1,6 +1,8 @@
 const express = require('express')
 const app = express()
 const ejsMate = require('ejs-mate');
+const bodyParser = require('body-parser') 
+const methodOverride = require('method-override');
 const ExpressError = require('./utils/ExpressError');
 const path = require('path')
 
@@ -11,6 +13,14 @@ app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname, 'views'))
 
 app.use(express.static(path.join(__dirname, 'public')))
+app.use(express.urlencoded({ extended: true }));
+app.use(methodOverride('_method'));
+app.use(bodyParser.json())
+app.use(
+  bodyParser.urlencoded({
+    extended: true,
+  })
+)
 
 app.use('/', appRoute)
 

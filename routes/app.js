@@ -11,6 +11,15 @@ router.route('/dashboard')
 
 router.route('/pozos')
     .get(app.showPozos)
+    .post(app.registerPozo)
+
+router.route('/pozos/nuevo')
+    .get(app.showNewPozo)    
+
+router.route('/pozos/:id')
+    .get(app.showEditPozo)
+    .put(app.updatePozo)
+    .delete(app.deletePozo)
 
 router.route('/distribuidoras')
     .get(app.showDistribuidoras)
