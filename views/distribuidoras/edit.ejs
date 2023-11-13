@@ -1,0 +1,85 @@
+<%- layout('layouts/template') %>
+
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Distribuidoras</h1>
+    <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.
+        For more information about DataTables, please visit the <a target="_blank"
+            href="https://datatables.net">official DataTables documentation</a>.</p>
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-body">
+            <div class="table-responsive">
+                <form action="/distribuidoras/<%=datos.rows[0].id_distribuidora%>?_method=PUT" method="POST">
+                    <div class="mb-3">
+                        <label class="form-label" for="pozo">Pozo</label>
+                        <select class="form-select" aria-label="Default select example" name="pozo">
+                            <% for(let i=1; i<= pozos.rows.length; i++){ %>
+                                    <% if(pozos.rows[i-1].id_pozo == datos.rows[0].id_pozo){ %>
+                                        <option value="<%= pozos.rows[i-1].id_pozo %>" selected><%= pozos.rows[i-1].id_pozo %></option>
+                                    <% } else { %>
+                                        <option value="<%= pozos.rows[i-1].id_pozo %>"><%= pozos.rows[i-1].id_pozo %></option>
+                                    <% } %>
+                            <% } %>
+                          </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="location">Ubicacion</label>
+                        <input class="form-control" type="text" id="location" name="location" value="<%= datos.rows[0].ubicacion %>" required>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="cp">CP (Entre 20000 y 99998)</label>
+                        <input class="form-control" type="number" id="cp" name="cp" value="<%= datos.rows[0].cp  %>" required>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <button class="btn btn-info">Actualizar Distribuidora</button>
+                    </div>
+                    <h1 class="h3 mb-2 text-gray-800">
+                        Productos
+                    </h1>
+                    
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="magna" name="magna" <%= productos.rows[0].magna == true ? 'checked' : '' %>>
+                        <label class="form-check-label" for="magna">
+                            Magna
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="premium" name="premium" <%= productos.rows[0].premium == true ? 'checked' : '' %>>
+                        <label class="form-check-label" for="premium">
+                            Premium
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="diesel" name="diesel" <%= productos.rows[0].diesel == true ? 'checked' : '' %>>
+                        <label class="form-check-label" for="diesel">
+                            Diesel
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="dme" name="dme" <%= productos.rows[0].dme == true ? 'checked' : '' %>>
+                        <label class="form-check-label" for="dme">
+                            DME
+                        </label>
+                    </div>
+                    <div class="mb-3">
+                        <button class="btn btn-info">Registrar Distribuidora</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- /.container-fluid -->
+
+</div>
+<!-- End of Main Content -->

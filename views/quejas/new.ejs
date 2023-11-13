@@ -1,0 +1,64 @@
+<%- layout('layouts/template') %>
+
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Quejas</h1>
+    <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.
+        For more information about DataTables, please visit the <a target="_blank"
+            href="https://datatables.net">official DataTables documentation</a>.</p>
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-body">
+            <div class="table-responsive">
+                <form action="/quejas" method="POST">
+                    <div class="mb-3">
+                        <label class="form-label" for="oculto">ID Queja</label>
+                        <% if(datos.rows[0].max === null) {%>
+                            <input class="form-control" type="number" id="oculto"  value="1" name="queja" required disabled>
+                            <input class="form-control" type="number" id="queja"  value="1" name="queja" required hidden>
+                        <% } else { %>
+                        <input class="form-control" type="number" id="queja"  value="<%= datos.rows[0].max + 1 %>" name="oculto" required disabled>
+                        <input class="form-control" type="number" id="locaquejation"  value="<%= datos.rows[0].max + 1 %>" name="queja" required hidden>
+                        <% } %>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="distribuidora">Distribuidoras</label>
+                        <select class="form-select" aria-label="Default select example" name="distribuidora">
+                            <option value="<%= distribuidoras.rows[0].id_distribuidora %>" selected><%= distribuidoras.rows[0].id_distribuidora %></option>
+                            <% for(let i=2; i<= distribuidoras.rows.length; i++){ %>
+                                    <option value="<%= distribuidoras.rows[i-1].id_distribuidora %>"><%= distribuidoras.rows[i-1].id_distribuidora %></option>
+                            <% } %>
+                          </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="estado">Estado</label>
+                        <input class="form-control" type="text" id="estado" name="estado" required>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="anio">Año</label>
+                        <input class="form-control" type="number" id="anio" name="anio" required>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <button class="btn btn-info">Registrar Queja</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- /.container-fluid -->
+
+</div>
+<!-- End of Main Content -->

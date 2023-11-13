@@ -1,0 +1,86 @@
+<%- layout('layouts/template') %>
+
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Distribuidoras</h1>
+    <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.
+        For more information about DataTables, please visit the <a target="_blank"
+            href="https://datatables.net">official DataTables documentation</a>.</p>
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-body">
+            <div class="table-responsive">
+                <form action="/distribuidoras" method="POST">
+                    <div class="mb-3">
+                        <label class="form-label" for="oculto">ID Distribuidora</label>
+                        <input class="form-control" type="number" id="oculto"  value="<%= datos.rows[0].max + 1 %>" name="oculto" required disabled>
+                        <input class="form-control" type="number" id="location"  value="<%= datos.rows[0].max + 1 %>" name="id_distribuidora" required hidden>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="pozo">Pozo</label>
+                        <select class="form-select" aria-label="Default select example" name="pozo">
+                            <option value="1" selected><%= pozos.rows[0].id_pozo %></option>
+                            <% for(let i=2; i<= pozos.rows.length; i++){ %>
+                                    <option value="<%= pozos.rows[i-1].id_pozo %>"><%= pozos.rows[i-1].id_pozo %></option>
+                            <% } %>
+                          </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="location">Ubicacion</label>
+                        <input class="form-control" type="text" id="location" name="location" required>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="cp">CP (Entre 20000 y 99998)</label>
+                        <input class="form-control" type="number" id="cp" name="cp" required>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                    </div>
+                    <h1 class="h3 mb-2 text-gray-800">
+                        Productos
+                    </h1>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="magna" name="magna">
+                        <label class="form-check-label" for="magna">
+                            Magna
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="premium" name="premium">
+                        <label class="form-check-label" for="premium">
+                            Premium
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="diesel" name="diesel">
+                        <label class="form-check-label" for="diesel">
+                            Diesel
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="dme" name="dme">
+                        <label class="form-check-label" for="dme">
+                            DME
+                        </label>
+                    </div>
+                    <div class="mb-3">
+                        <button class="btn btn-info">Registrar Distribuidora</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- /.container-fluid -->
+
+</div>
+<!-- End of Main Content -->

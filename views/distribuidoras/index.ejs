@@ -4,7 +4,7 @@
 <div class="container-fluid">
 
     <!-- Page Heading -->
-    <h1 class="h3 mb-2 text-gray-800">Pozos</h1>
+    <h1 class="h3 mb-2 text-gray-800">Distribuidoras</h1>
     <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.
         For more information about DataTables, please visit the <a target="_blank"
             href="https://datatables.net">official DataTables documentation</a>.</p>
@@ -14,34 +14,46 @@
         <div class="card-body">
             <div class="table-responsive">
                 <div class="card-header py-3 mx-auto">
-                    <a href="/pozos/nuevo"><button class="btn btn-primary" type="submit">Agregar un nuevo registro</button></a>
+                    <a href="/distribuidoras/nuevo"><button class="btn btn-primary" type="submit">Agregar un nuevo registro</button></a>
                 </div>
-                <% if(datos.length) {%>
+                <% if(datos.rows.length) {%>
                 <table class="table">
                     <thead class="thead-dark">
                         <tr>
                             <th scope="col">ID</th>
                             <th scope="col">ID Estado</th>
-                            <th scope="col">Periodo</th>
+                            <th scope="col">ID Pozo</th>
+                            <th scope="col">Ubicacion</th>
+                            <th scope="col">CP</th>
+                            <th scope="col">Magna</th>
+                            <th scope="col">Premium</th>
+                            <th scope="col">Diesel</th>
+                            <th scope="col">DME</th>
                             <th scope="col">Editar</th>
                             <th scope="col">Eliminar</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <% for(pozo of datos) {%>
+                        <% for(distribuidora of datos.rows) {%>
                         <tr>
-                            <th scope="row"><%= pozo.id_pozo %></th>
-                            <td><%= pozo.nombre %></td>
-                            <td><%= pozo.periodo %></td>
+                            <th scope="row"><%= distribuidora.id_distribuidora %></th>
+                            <td><%= distribuidora.nombre %></td>
+                            <td><%= distribuidora.id_pozo %></td>
+                            <td><%= distribuidora.ubicacion %></td>
+                            <td><%= distribuidora.cp %></td>
+                            <td><%= productos.rows[0].magna %></td>
+                            <td><%= productos.rows[0].premium %></td>
+                            <td><%= productos.rows[0].diesel %></td>
+                            <td><%= productos.rows[0].dme %></td>
                             <td>
-                                <a href="pozos/<%= pozo.id_pozo %>">
+                                <a href="distribuidoras/<%= distribuidora.id_distribuidora %>">
                                     <button class="btn btn-primary" type="button">
                                         <i class="bi bi-pen"></i>
                                     </button>
                                 </a>
                             </td>
                             <td>
-                                <form action="/pozos/<%= pozo.id_pozo %>?_method=DELETE" method="post">
+                                <form action="/distribuidoras/<%= distribuidora.id_distribuidora %>?_method=DELETE" method="post">
                                     <button class="btn btn-danger" type="submit">
                                         <i class="bi bi-trash3"></i>
                                     </button>  

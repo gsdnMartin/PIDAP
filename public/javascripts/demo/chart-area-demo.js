@@ -32,7 +32,7 @@ var ctx = document.getElementById("myAreaChart");
 var myLineChart = new Chart(ctx, {
   type: 'line',
   data: {
-    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+    labels: ["Jan", "Feb", "Mar", "Apr", "May"],
     datasets: [{
       label: "Earnings",
       lineTension: 0.3,
@@ -46,7 +46,7 @@ var myLineChart = new Chart(ctx, {
       pointHoverBorderColor: "rgba(78, 115, 223, 1)",
       pointHitRadius: 10,
       pointBorderWidth: 2,
-      data: [0, 10000, 5000, 15000, 10000, 20000, 15000, 25000, 20000, 30000, 25000, 40000],
+      data: [95000, 92000, 93000, 94000, 57000],
     }],
   },
   options: {
@@ -116,3 +116,26 @@ var myLineChart = new Chart(ctx, {
     }
   }
 });
+
+function prueba(){
+  const url = 'http://localhost:3000/recursos/produccionGrafica';
+  fetch(url)
+  .then((response) => {
+    if (response.ok) {
+      return response.json();
+    } else {
+      return Promise.reject(response.statusText);
+    }
+  })
+  .then((data) => {
+    for(let i=0; i<data.rows.length; i++){
+      myLineChart.config.data.labels[i] = data.rows[i].anio
+      myLineChart.config.data.datasets[0].data[i] = data.rows[i].produccion_total
+    }
+  })
+  .catch((error) => {
+    console.log(error);
+  });
+}
+
+prueba()

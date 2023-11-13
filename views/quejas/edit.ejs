@@ -1,0 +1,54 @@
+<%- layout('layouts/template') %>
+
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Distribuidoras</h1>
+    <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.
+        For more information about DataTables, please visit the <a target="_blank"
+            href="https://datatables.net">official DataTables documentation</a>.</p>
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-body">
+            <div class="table-responsive">
+                <form action="/quejas/<%= datos.rows[0].id_queja%>?_method=PUT" method="POST">
+                    <div class="mb-3">
+                        <label class="form-label" for="distribuidora">Distribuidora</label>
+                        <select class="form-select" aria-label="Default select example" name="distribuidora">
+                            <% for(let i=1; i<= distribuidoras.rows.length; i++){ %>
+                                <% if(distribuidoras.rows[i-1].id_distribuidora == datos.rows[0].id_distribuidora) {%>
+                                    <option value="<%= distribuidoras.rows[i-1].id_distribuidora %>" selected><%= distribuidoras.rows[i-1].id_distribuidora %></option>
+                                <% } else { %>
+                                    <option value="<%= distribuidoras.rows[i-1].id_distribuidora %>"><%= distribuidoras.rows[i-1].id_distribuidora %></option>
+                                <% } %>
+                            <% } %>
+                          </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="estado">Estado</label>
+                        <input class="form-control" type="text" id="estado" name="estado" value="<%= datos.rows[0].estado %>" required>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="anio">Anio</label>
+                        <input class="form-control" type="number" id="anio" name="anio" value="<%= datos.rows[0].anio %>" required>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <button class="btn btn-info">Actualizar Queja</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- /.container-fluid -->
+
+</div>
+<!-- End of Main Content -->

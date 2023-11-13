@@ -7,7 +7,7 @@ var ctx = document.getElementById("myPieChart");
 var myPieChart = new Chart(ctx, {
   type: 'doughnut',
   data: {
-    labels: ["Direct", "Referral", "Social"],
+    labels: ["Hola", "Referral", "Social"],
     datasets: [{
       data: [55, 30, 15],
       backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc'],
@@ -33,3 +33,28 @@ var myPieChart = new Chart(ctx, {
     cutoutPercentage: 80,
   },
 });
+
+function prueba(){
+  const url = 'http://localhost:3000/recursos/pozoGrafica';
+  fetch(url)
+  .then((response) => {
+    if (response.ok) {
+      return response.json();
+    } else {
+      return Promise.reject(response.statusText);
+    }
+  })
+  .then((data) => {
+    for(let i=0; i<3; i++){
+      myPieChart.config.data.labels[i] = data.rows[i].nombre_estado
+      myPieChart.config.data.datasets[0].data[i] = data.rows[i].cantidad
+    }
+    console.log(myPieChart)
+    console.log(data);
+  })
+  .catch((error) => {
+    console.log(error);
+  });
+}
+
+prueba()
