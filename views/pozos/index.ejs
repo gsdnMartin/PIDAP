@@ -14,11 +14,11 @@
         <div class="card-body">
             <div class="table-responsive">
                 <div class="card-header py-3 mx-auto">
-                    <a href="/pozos/nuevo"><button class="btn btn-primary" type="submit">Agregar un nuevo registro</button></a>
+                    <a href="/pozos/nuevo"><button class="btn btn-success" type="submit">Agregar un nuevo registro</button></a>
                 </div>
                 <% if(datos.length) {%>
                 <table class="table">
-                    <thead class="thead-dark">
+                    <thead class="table-success">
                         <tr>
                             <th scope="col">ID</th>
                             <th scope="col">ID Estado</th>
@@ -35,7 +35,7 @@
                             <td><%= pozo.periodo %></td>
                             <td>
                                 <a href="pozos/<%= pozo.id_pozo %>">
-                                    <button class="btn btn-primary" type="button">
+                                    <button class="btn btn-success" type="button">
                                         <i class="bi bi-pen"></i>
                                     </button>
                                 </a>

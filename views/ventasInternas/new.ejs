@@ -1,0 +1,79 @@
+<%- layout('layouts/template') %>
+
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Ventas Internas</h1>
+    <p class="mb-4">Se refieren a las ventas que la empresa realiza en el mercado nacional de sus productos petrolíferos y 
+        petroquímicos. Estos productos incluyen gasolinas, diésel, combustóleo, gas licuado de petróleo (GLP), derivados del etano, 
+        derivados del metano, propileno y sus derivados, aromáticos y derivados y otros petroquímicos.</p>
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-body">
+            <div class="table-responsive">
+                <form action="/ventasinternas" method="POST">
+                    <div class="mb-3">
+                        <label class="form-label" for="ce">ID Ventas</label>
+                        <% if(id.rows[0].max === null) {%>
+                            <input class="form-control" type="number" id="vi"  value="1" name="vi" required disabled>
+                            <input class="form-control" type="number" id="vi"  value="1" name="vi" required hidden>
+                        <% } else { %>
+                        <input class="form-control" type="number" id="vi"  value="<%= id.rows[0].max + 1 %>" name="vi" required disabled>
+                        <input class="form-control" type="number" id="vi"  value="<%= id.rows[0].max + 1 %>" name="vi" required hidden>
+                        <% } %>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="distribuidora">Distribuidoras</label>
+                        <select class="form-select" aria-label="Default select example" name="distribuidora">
+                            <option value="<%= distribuidoras.rows[0].id_distribuidora %>" selected><%= distribuidoras.rows[0].id_distribuidora %></option>
+                            <% for(let i=2; i<= distribuidoras.rows.length; i++){ %>
+                                    <option value="<%= distribuidoras.rows[i-1].id_distribuidora %>"><%= distribuidoras.rows[i-1].id_distribuidora %></option>
+                            <% } %>
+                          </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="tipo">Tipo</label>
+                        <input class="form-control" type="text" id="tipo" name="tipo" required>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="unidad">Unidad</label>
+                        <input class="form-control" type="text" id="unidad" name="unidad" required>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="periodo">Periodo</label>
+                        <input class="form-control" type="date" id="periodo" name="periodo" required>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="valor">Valor</label>
+                        <input class="form-control" type="number" id="valor" name="valor" required>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <button class="btn btn-info">Registrar CE</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- /.container-fluid -->
+
+</div>
+<!-- End of Main Content -->

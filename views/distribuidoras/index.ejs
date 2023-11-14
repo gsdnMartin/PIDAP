@@ -14,11 +14,11 @@
         <div class="card-body">
             <div class="table-responsive">
                 <div class="card-header py-3 mx-auto">
-                    <a href="/distribuidoras/nuevo"><button class="btn btn-primary" type="submit">Agregar un nuevo registro</button></a>
+                    <a href="/distribuidoras/nuevo"><button class="btn btn-success" type="submit">Agregar un nuevo registro</button></a>
                 </div>
                 <% if(datos.rows.length) {%>
                 <table class="table">
-                    <thead class="thead-dark">
+                    <thead class="table-success">
                         <tr>
                             <th scope="col">ID</th>
                             <th scope="col">ID Estado</th>
@@ -34,26 +34,26 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <% for(distribuidora of datos.rows) {%>
+                        <% for(i = 0; i<datos.rows.length; i++) {%>
                         <tr>
-                            <th scope="row"><%= distribuidora.id_distribuidora %></th>
-                            <td><%= distribuidora.nombre %></td>
-                            <td><%= distribuidora.id_pozo %></td>
-                            <td><%= distribuidora.ubicacion %></td>
-                            <td><%= distribuidora.cp %></td>
-                            <td><%= productos.rows[0].magna %></td>
-                            <td><%= productos.rows[0].premium %></td>
-                            <td><%= productos.rows[0].diesel %></td>
-                            <td><%= productos.rows[0].dme %></td>
+                            <th scope="row"><%= datos.rows[i].id_distribuidora %></th>
+                            <td><%= datos.rows[i].nombre %></td>
+                            <td><%= datos.rows[i].id_pozo %></td>
+                            <td><%= datos.rows[i].ubicacion %></td>
+                            <td><%= datos.rows[i].cp %></td>
+                            <td><%= productos.rows[i].magna === true ? 'Si' : 'No' %></td>
+                            <td><%= productos.rows[i].premium  === true ? 'Si' : 'No' %></td>
+                            <td><%= productos.rows[i].diesel === true ? 'Si' : 'No' %></td>
+                            <td><%= productos.rows[i].dme  === true ? 'Si' : 'No'%></td>
                             <td>
-                                <a href="distribuidoras/<%= distribuidora.id_distribuidora %>">
-                                    <button class="btn btn-primary" type="button">
+                                <a href="distribuidoras/<%= datos.rows[i].id_distribuidora %>">
+                                    <button class="btn btn-success" type="button">
                                         <i class="bi bi-pen"></i>
                                     </button>
                                 </a>
                             </td>
                             <td>
-                                <form action="/distribuidoras/<%= distribuidora.id_distribuidora %>?_method=DELETE" method="post">
+                                <form action="/distribuidoras/<%= datos.rows[i].id_distribuidora %>?_method=DELETE" method="post">
                                     <button class="btn btn-danger" type="submit">
                                         <i class="bi bi-trash3"></i>
                                     </button>  

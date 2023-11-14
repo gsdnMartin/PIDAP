@@ -1,0 +1,69 @@
+<%- layout('layouts/template') %>
+
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Ventas Internas</h1>
+    <p class="mb-4">Se refieren a las ventas que la empresa realiza en el mercado nacional de sus productos petrolíferos y 
+        petroquímicos. Estos productos incluyen gasolinas, diésel, combustóleo, gas licuado de petróleo (GLP), derivados del etano, 
+        derivados del metano, propileno y sus derivados, aromáticos y derivados y otros petroquímicos.</p>
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-body">
+            <div class="table-responsive">
+                <form action="/ventasinternas/<%= datos.rows[0].id_vi %>?_method=PUT" method="POST">
+                    <div class="mb-3">
+                        <label class="form-label" for="distribuidora">Distribuidoras</label>
+                        <select class="form-select" aria-label="Default select example" name="distribuidora">
+                            <% for(let i=1; i<= distribuidoras.rows.length; i++){ %>
+                                <% if(distribuidoras.rows[i-1].id_distribuidora == datos.rows[0].id_distribuidora) {%>
+                                    <option value="<%= distribuidoras.rows[i-1].id_distribuidora %>" selected><%= distribuidoras.rows[i-1].id_distribuidora %></option>
+                                <% } else { %>
+                                    <option value="<%= distribuidoras.rows[i-1].id_distribuidora %>"><%= distribuidoras.rows[i-1].id_distribuidora %></option>
+                                <% } %>
+                            <% } %>
+                          </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="tipo">Tipo</label>
+                        <input class="form-control" type="text" id="tipo" name="tipo" value="<%= datos.rows[0].tipo %>" required>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="unidad">Unidad</label>
+                        <input class="form-control" type="text" id="unidad" name="unidad" value="<%= datos.rows[0].unidad %>" required>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="periodo">Periodo</label>
+                        <input class="form-control" type="date" id="periodo" name="periodo" value="<%= datos.rows[0].periodo %>" required>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="valor">Valor</label>
+                        <input class="form-control" type="number" id="valor" name="valor" value="<%= datos.rows[0].valor %>" required>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <button class="btn btn-info">Actualizar CE</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- /.container-fluid -->
+
+</div>
+<!-- End of Main Content -->

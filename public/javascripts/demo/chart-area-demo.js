@@ -32,18 +32,18 @@ var ctx = document.getElementById("myAreaChart");
 var myLineChart = new Chart(ctx, {
   type: 'line',
   data: {
-    labels: ["Jan", "Feb", "Mar", "Apr", "May"],
+    labels: ["2019", "2020", "2021", "2022", "2023"],
     datasets: [{
       label: "Earnings",
       lineTension: 0.3,
       backgroundColor: "rgba(78, 115, 223, 0.05)",
-      borderColor: "rgba(78, 115, 223, 1)",
+      borderColor: "#08A045",
       pointRadius: 3,
-      pointBackgroundColor: "rgba(78, 115, 223, 1)",
-      pointBorderColor: "rgba(78, 115, 223, 1)",
+      pointBackgroundColor: "#08A045",
+      pointBorderColor: "#08A045",
       pointHoverRadius: 3,
-      pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",
-      pointHoverBorderColor: "rgba(78, 115, 223, 1)",
+      pointHoverBackgroundColor: "#08A045",
+      pointHoverBorderColor: "#08A045",
       pointHitRadius: 10,
       pointBorderWidth: 2,
       data: [95000, 92000, 93000, 94000, 57000],
@@ -97,9 +97,9 @@ var myLineChart = new Chart(ctx, {
       backgroundColor: "rgb(255,255,255)",
       bodyFontColor: "#858796",
       titleMarginBottom: 10,
-      titleFontColor: '#6e707e',
+      titleFontColor: '#08A045',
       titleFontSize: 14,
-      borderColor: '#dddfeb',
+      borderColor: '#08A045',
       borderWidth: 1,
       xPadding: 15,
       yPadding: 15,
@@ -129,8 +129,8 @@ function prueba(){
   })
   .then((data) => {
     for(let i=0; i<data.rows.length; i++){
-      myLineChart.config.data.labels[i] = data.rows[i].anio
       myLineChart.config.data.datasets[0].data[i] = data.rows[i].produccion_total
+      myLineChart.clear()
     }
   })
   .catch((error) => {

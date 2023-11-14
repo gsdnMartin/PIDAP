@@ -41,9 +41,27 @@ router.route('/distribuidoras/:id')
 
 router.route('/ventasinternas')
     .get(app.showVentasInternas)
+    .post(app.registerVI)
 
-router.route('/ventasexternas')
-    .get(app.showVentasExternas) 
+router.route('/ventasinternas/nuevo')
+    .get(app.showNewVentasInternas) 
+
+router.route('/ventasinternas/:id')
+    .get(app.showEditVI) 
+    .put(app.updateVI)
+    .delete(app.deleteVI)
+
+router.route('/comercioexterior')
+    .get(app.showComercioExterior) 
+    .post(app.registerCE)
+
+router.route('/comercioexterior/nuevo')
+    .get(app.showNewComercioExterior) 
+
+router.route('/comercioexterior/:id')
+    .get(app.showEditCE) 
+    .put(app.updateCE)
+    .delete(app.deleteCE)
 
 router.route('/quejas')
     .get(app.showQuejas)

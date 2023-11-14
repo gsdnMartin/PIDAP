@@ -16,9 +16,11 @@ module.exports.showLogin = (req, res) => {
 module.exports.showDashboard = async (req, res) => {
     const resultado1 = await pool.query('SELECT * FROM vista_distribuidora_estado ORDER BY(cantidad) DESC')
     const resultado2 = await pool.query('SELECT * FROM vista_pozo_estado ORDER BY(cantidad) DESC')
+    const historicoVI = await pool.query('SELECT sum(valor) FROM ventas_internas')
+    const historicoCE = await pool.query('SELECT sum(valor) FROM comercio_exterior')
     const distribuidora_estado = resultado1.rows
     const pozo_estado = resultado2.rows
-    res.render('dashboard', {distribuidora_estado, pozo_estado})
+    res.render('dashboard', {distribuidora_estado, pozo_estado, historicoVI, historicoCE})
 }
 
 module.exports.showProduccionTime = async (req, res) => {
@@ -96,8 +98,8 @@ module.exports.deletePozo = (req, res) => {
 }
 
 module.exports.showDistribuidoras = async(req, res) => {
-    const datos = await pool.query('SELECT distribuidora.id_distribuidora, estado.nombre, distribuidora.id_pozo, distribuidora.ubicacion, distribuidora.cp FROM distribuidora JOIN estado ON distribuidora.id_estado = estado.id_estado')
-    const productos = await pool.query('SELECT magna, premium, diesel, dme FROM productos')
+    const datos = await pool.query('SELECT distribuidora.id_distribuidora, estado.nombre, distribuidora.id_pozo, distribuidora.ubicacion, distribuidora.cp FROM distribuidora JOIN estado ON distribuidora.id_estado = estado.id_estado ORDER BY (id_distribuidora)')
+    const productos = await pool.query('SELECT * FROM productos ORDER BY (id_distribuidora)')
     res.render('distribuidoras/index', { datos, productos })
 }
 
@@ -183,17 +185,115 @@ module.exports.showVentasInternas = (req, res) => {
             throw error
         }
         const datos = results.rows
-        res.render('ventasinternas', { datos })
+        res.render('ventasInternas/index', { datos })
     })
 }
 
-module.exports.showVentasExternas = (req, res) => {
-    pool.query('SELECT * FROM ventas_internas', (error, results) => {
+module.exports.showNewVentasInternas = async(req, res) => {
+    const id = await pool.query("SELECT max(id_vi) FROM ventas_internas ")
+    const distribuidoras = await pool.query("SELECT id_distribuidora FROM distribuidora ")
+    res.render('ventasInternas/new', { id, distribuidoras })
+}
+
+module.exports.registerVI = async(req, res) => {
+    const {vi, distribuidora, tipo, unidad, periodo, valor} = req.body
+    pool.query('INSERT INTO ventas_internas (id_vi, id_distribuidora, tipo, unidad, periodo, valor) VALUES ($1, $2, $3, $4, $5, $6) ', 
+    [vi, distribuidora, tipo, unidad, periodo, valor], (error, results) => {
+        if (error) {
+            throw error
+        }
+        res.redirect('/ventasInternas')
+    }) 
+}
+
+module.exports.showEditVI = async(req, res) => {
+    const id = req.params.id
+    const datos = await pool.query('SELECT * FROM ventas_internas WHERE id_vi = $1', [id])    
+    const distribuidoras = await pool.query('SELECT id_distribuidora FROM distribuidora')
+    res.render('ventasInternas/edit', { datos, distribuidoras })
+}
+
+module.exports.updateVI = async(req, res) => {
+    const id = req.params.id
+    const { distribuidora, tipo, unidad, periodo, valor } = req.body
+    pool.query('UPDATE ventas_internas SET id_distribuidora=$1, tipo=$2, unidad=$3, periodo=$4, valor=$5 WHERE id_vi = $6;',
+        [distribuidora, tipo, unidad, periodo, valor, id],
+        (error, results) => {
+            if (error) {
+                throw error
+            }
+            res.redirect('/ventasInternas')
+        })
+}
+
+module.exports.deleteVI = (req, res) => {
+    const id = req.params.id
+
+    pool.query('DELETE FROM ventas_internas WHERE id_vi = $1', [id], (err, results) => {
+        if (err) {
+            new ExpressError('Pagina No Encontrada', 404)
+            return res.render('error', { err })
+        }
+        res.redirect('/ventasInternas')
+    })
+}
+
+module.exports.showComercioExterior = (req, res) => {
+    pool.query('SELECT * FROM comercio_exterior', (error, results) => {
         if (error) {
             throw error
         }
         const datos = results.rows
-        res.render('ventasexternas', { datos })
+        res.render('comercioExterior/index', { datos })
+    })
+}
+
+module.exports.showNewComercioExterior = async(req, res) => {
+    const id = await pool.query("SELECT max(id_ce) FROM comercio_exterior ")
+    const distribuidoras = await pool.query("SELECT id_distribuidora FROM distribuidora ")
+    res.render('comercioExterior/new', { id, distribuidoras })
+}
+
+module.exports.registerCE = async(req, res) => {
+    const {ce, distribuidora, tipo, unidad, periodo, movimiento, valor} = req.body
+    pool.query('INSERT INTO comercio_exterior (id_ce, id_distribuidora, tipo, unidad, periodo, movimiento, valor) VALUES ($1, $2, $3, $4, $5, $6, $7) ', 
+    [ce, distribuidora, tipo, unidad, periodo, movimiento, valor], (error, results) => {
+        if (error) {
+            throw error
+        }
+        res.redirect('/comercioexterior')
+    }) 
+}
+
+module.exports.showEditCE = async(req, res) => {
+    const id = req.params.id
+    const datos = await pool.query('SELECT * FROM comercio_exterior WHERE id_ce = $1', [id])    
+    const distribuidoras = await pool.query('SELECT id_distribuidora FROM distribuidora')
+    res.render('comercioExterior/edit', { datos, distribuidoras })
+}
+
+module.exports.updateCE = async(req, res) => {
+    const id = req.params.id
+    const { distribuidora, tipo, unidad, periodo, movimiento, valor } = req.body
+    pool.query('UPDATE comercio_exterior SET id_distribuidora=$1, tipo=$2, unidad=$3, periodo=$4, movimiento=$5, valor=$6 WHERE id_ce = $7;',
+        [distribuidora, tipo, unidad, periodo, movimiento, valor, id],
+        (error, results) => {
+            if (error) {
+                throw error
+            }
+            res.redirect('/comercioexterior')
+        })
+}
+
+module.exports.deleteCE = (req, res) => {
+    const id = req.params.id
+
+    pool.query('DELETE FROM comercio_exterior WHERE id_ce = $1', [id], (err, results) => {
+        if (err) {
+            new ExpressError('Pagina No Encontrada', 404)
+            return res.render('error', { err })
+        }
+        res.redirect('/comercioexterior')
     })
 }
 
@@ -215,7 +315,7 @@ module.exports.showNewQuejas = async (req, res) => {
 
 module.exports.registerQueja = async (req, res) => {
     const { queja, distribuidora, estado, anio } = req.body
-    
+    console.log(req.body)
     pool.query('INSERT INTO quejas (id_queja, id_distribuidora, estado, anio) VALUES ($1, $2, $3, $4) ', [queja, distribuidora, estado, anio], (error, results) => {
         if (error) {
             throw error
@@ -234,7 +334,6 @@ module.exports.showEditQuejas = async (req, res) => {
 module.exports.updateQueja = async(req, res) => {
     const id = req.params.id
     const { distribuidora, estado, anio} = req.body    
-    console.log(req.body)
     pool.query(
         'UPDATE quejas SET id_distribuidora=$1, estado=$2, anio=$3 WHERE id_queja = $4;',
         [distribuidora, estado, anio, id],
@@ -242,7 +341,6 @@ module.exports.updateQueja = async(req, res) => {
             if (error) {
                 throw error
             }
-            console.log(results)
             res.redirect('/quejas')
         }
     )
