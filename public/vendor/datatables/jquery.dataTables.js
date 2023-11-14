@@ -4779,6 +4779,7 @@
 	
 		// Server-side processing init complete is done by _fnAjaxUpdateDraw
 		var dataSrc = _fnDataSource( settings );
+		
 		if ( dataSrc != 'ssp' || deferLoading ) {
 			// if there is an ajax source load the data
 			if ( dataSrc == 'ajax' ) {
@@ -15385,3 +15386,4 @@
 
 	return $.fn.dataTable;
 }));
+

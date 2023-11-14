@@ -1,67 +1,76 @@
 <% layout('layouts/template') %>
 
 
-<div class="container-fluid">
+    <div class="container-fluid">
 
-    <!-- Page Heading -->
-    <h1 class="h3 mb-2 text-gray-800">Quejas</h1>
-    <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.
-        For more information about DataTables, please visit the <a target="_blank"
-            href="https://datatables.net">official DataTables documentation</a>.</p>
+        <!-- Page Heading -->
+        <h1 class="h3 mb-2 text-gray-800">Quejas</h1>
+        <p class="mb-4">Las quejas de Pemex son un conjunto de reclamos que los ciudadanos y 
+            empresas presentan contra la empresa petrolera mexicana. </a>.</p>
 
-    <!-- DataTales Example -->
-    <div class="card shadow mb-4">
-        <div class="card-body">
-            <div class="table-responsive">
-                <div class="card-header py-3 mx-auto">
-                    <a href="/quejas/nuevo"><button class="btn btn-primary" type="submit">Agregar un nuevo registro</button></a>
+        <!-- DataTales Example -->
+        <div class="card shadow mb-4">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <div class="card-header py-3 mx-auto">
+                        <a href="/quejas/nuevo"><button class="btn btn-primary" type="submit">Agregar un nuevo
+                                registro</button></a>
+                    </div>
+                    <% if(datos.length) {%>
+                        <table class="table">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col">ID</th>
+                                    <th scope="col">ID Distribuidora</th>
+                                    <th scope="col">Estado</th>
+                                    <th scope="col">Año</th>
+                                    <th scope="col">Editar</th>
+                                    <th scope="col">Eliminar</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% for(queja of datos) {%>
+                                    <tr>
+                                        <th scope="row">
+                                            <%= queja.id_queja %>
+                                        </th>
+                                        <td>
+                                            <%= queja.id_distribuidora %>
+                                        </td>
+                                        <td>
+                                            <%= queja.estado %>
+                                        </td>
+                                        <td>
+                                            <%= queja.anio %>
+                                        </td>
+                                        <td>
+                                            <a href="quejas/<%= queja.id_queja %>">
+                                                <button class="btn btn-primary" type="button">
+                                                    <i class="bi bi-pen"></i>
+                                                </button>
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <form action="/quejas/<%= queja.id_queja %>?_method=DELETE" method="post">
+                                                <button class="btn btn-danger" type="submit">
+                                                    <i class="bi bi-trash3"></i>
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                    <% } %>
+                            </tbody>
+                        </table>
+                        <% }else{ %>
+                            <h3 class="text-center">No hay registros en este momento</h3>
+                            <% } %>
                 </div>
-                <% if(datos.length) {%>
-                <table class="table">
-                    <thead class="thead-dark">
-                        <tr>
-                            <th scope="col">ID</th>
-                            <th scope="col">ID Distribuidora</th>
-                            <th scope="col">Estado</th>
-                            <th scope="col">Año</th>
-                            <th scope="col">Editar</th>
-                            <th scope="col">Eliminar</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <% for(queja of datos) {%>
-                        <tr>
-                            <th scope="row"><%= queja.id_queja %></th>
-                            <td><%= queja.id_distribuidora %></td>
-                            <td><%= queja.estado %></td>
-                            <td><%= queja.anio %></td>
-                            <td>
-                                <a href="quejas/<%= queja.id_queja %>">
-                                    <button class="btn btn-primary" type="button">
-                                        <i class="bi bi-pen"></i>
-                                    </button>
-                                </a>
-                            </td>
-                            <td>
-                                <form action="/quejas/<%= queja.id_queja %>?_method=DELETE" method="post">
-                                    <button class="btn btn-danger" type="submit">
-                                        <i class="bi bi-trash3"></i>
-                                    </button>  
-                                </form>                             
-                            </td>
-                        </tr>
-                        <% } %>
-                    </tbody>
-                </table>
-                <% }else{ %>
-                    <h3 class="text-center">No hay registros en este momento</h3>
-                <% } %>
             </div>
         </div>
+
     </div>
+    <!-- /.container-fluid -->
 
-</div>
-<!-- /.container-fluid -->
-
-</div>
-<!-- End of Main Content -->
+    </div>
+    <!-- End of Main Content -->
+    <script src="/javascripts/quejasTable.js"></script>

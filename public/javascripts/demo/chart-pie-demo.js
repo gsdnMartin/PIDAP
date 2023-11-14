@@ -49,8 +49,6 @@ function prueba(){
       myPieChart.config.data.labels[i] = data.rows[i].nombre_estado
       myPieChart.config.data.datasets[0].data[i] = data.rows[i].cantidad
     }
-    console.log(myPieChart)
-    console.log(data);
   })
   .catch((error) => {
     console.log(error);

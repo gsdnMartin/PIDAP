@@ -64,7 +64,9 @@ $.extend( DataTable.ext.classes, {
 
 
 /* Bootstrap paging button renderer */
+
 DataTable.ext.renderer.pageButton.bootstrap = function ( settings, host, idx, buttons, page, pages ) {
+	console.log(DataTable)
 	var api     = new DataTable.Api( settings );
 	var classes = settings.oClasses;
 	var lang    = settings.oLanguage.oPaginate;

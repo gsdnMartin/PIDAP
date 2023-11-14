@@ -10,7 +10,7 @@ const pool = require('../utils/postgresql')
 const ExpressError = require('../utils/ExpressError');
 
 module.exports.showLogin = (req, res) => {
-    res.render('login')
+    res.render('home.ejs')
 }
 
 module.exports.showDashboard = async (req, res) => {
