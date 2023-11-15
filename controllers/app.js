@@ -36,7 +36,7 @@ module.exports.showPozoGrafica = async (req, res) => {
 }
 
 module.exports.showPozos = (req, res) => {
-    pool.query('SELECT pozo.id_pozo, estado.nombre, pozo.periodo FROM pozo JOIN estado ON pozo.id_estado = estado.id_estado', (error, results) => {
+    pool.query('SELECT pozo.id_pozo, estado.nombre, pozo.periodo FROM pozo JOIN estado ON pozo.id_estado = estado.id_estado ORDER BY(id_pozo)', (error, results) => {
         if (error) {
             throw error
         }
@@ -117,11 +117,7 @@ module.exports.registerDistribuidora = async (req, res) => {
     const estado = await seleccionarEstado(estados, cp)
     const productos = seleccionProductos(req.body)
     productos.unshift(id_distribuidora)
-    if(id_max.rows[0].max == null){
-        productos.unshift(1)
-    }else{
-        productos.unshift(id_max.rows[0].max+1)
-    }
+    productos.unshift(id_distribuidora)
     pool.query('INSERT INTO distribuidora (id_distribuidora, id_estado, id_pozo, ubicacion, cp) VALUES ($1, $2, $3, $4, $5) ', [id_distribuidora, estado, pozo, location, cp], (error, results) => {
         if (error) {
             throw error
@@ -169,7 +165,7 @@ module.exports.updateDistribuidora = async(req, res) => {
 
 module.exports.deleteDistribuidora = (req, res) => {
     const id = req.params.id
-
+    pool.query('DELETE FROM productos WHERE id_distribuidora = $1', [id])
     pool.query('DELETE FROM distribuidora WHERE id_distribuidora = $1', [id], (err, results) => {
         if (err) {
             new ExpressError('Pagina No Encontrada', 404)
